@@ -38,6 +38,7 @@ def main(args):
 
     PomdpWrapper = pomdp_wrappers[env_name]
     env = PomdpWrapper(OneHotAction(GymMinAtar(env_name)))
+    env = gym.wrappers.RecordVideo(env, "./gym-video", episode_trigger=lambda episode_id: episode_id % 10 == 0)
     obs_shape = env.observation_space.shape
     action_size = env.action_space.shape[0]
     obs_dtype = bool
@@ -74,7 +75,8 @@ def main(args):
         best_mean_score = 0
         train_episodes = 0
         best_save_path = os.path.join(model_dir, 'models_best.pth')
-        for iter in range(1, trainer.config.train_steps):  
+        for iter in range(1, trainer.config.train_steps):
+            print("Training at iteration: ", iter)
             if iter%trainer.config.train_every == 0:
                 train_metrics = trainer.train_batch(train_metrics)
             if iter%trainer.config.slow_target_update == 0:

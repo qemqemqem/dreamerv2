@@ -3,7 +3,7 @@ import gym
 import numpy as np
 
 class GymMinAtar(gym.Env):
-    metadata = {'render.modes': ['human', 'rgb_array']}
+    metadata = {'render_modes': ['human', 'rgb_array']}
 
     def __init__(self, env_name, display_time=50):
         self.display_time = display_time
@@ -30,7 +30,19 @@ class GymMinAtar(gym.Env):
     
     def render(self, mode='human'):
         if mode == 'rgb_array':
-            return self.env.state()
+            internal_state = self.env.state()
+
+            # Check if internal_state is of boolean type, and if it is, convert it to uint8 for visualization
+            if internal_state.dtype == bool:
+                internal_state_int = internal_state.astype(np.uint8)
+                internal_state_int = internal_state_int * 255
+                # A 10 by 10 video isn't very viewable, so we'll blow it up
+                resize_factor = 30
+                internal_state_int = np.repeat(internal_state_int, resize_factor, axis=0)
+                internal_state_int = np.repeat(internal_state_int, resize_factor, axis=1)
+                return internal_state_int
+
+            return internal_state
         elif mode == 'human':
             self.env.display_state(self.display_time)
 

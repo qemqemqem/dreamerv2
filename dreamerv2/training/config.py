@@ -21,14 +21,14 @@ class MinAtarConfig():
     action_dtype: np.dtype = np.float32
 
     #training desc
-    train_steps: int = int(5e6)
+    train_steps: int = int(5e2)
     train_every: int = 50                                  #reduce this to potentially improve sample requirements
     collect_intervals: int = 5 
     batch_size: int = 50 
     seq_len: int = 50
     eval_episode: int = 4
     eval_render: bool = True
-    save_every: int = int(1e5)
+    save_every: int = int(1e2)
     seed_steps: int = 4000
     model_dir: int = 'results'
     gif_dir: int = 'results'
@@ -83,14 +83,14 @@ class MiniGridConfig():
     action_dtype: np.dtype = np.float32
 
     #training desc
-    train_steps: int = int(1e6)
+    train_steps: int = int(1e3)
     train_every: int = 5
     collect_intervals: int = 5
     batch_size: int = 50
     seq_len: int = 8
     eval_episode: int = 5
-    eval_render: bool = False
-    save_every: int = int(5e4)
+    eval_render: bool = True
+    save_every: int = int(5e2)
     seed_episodes: int = 5
     model_dir: int = 'results'
     gif_dir: int = 'results'
